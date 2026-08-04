@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.env
+*.db
+*.sqlite
+node_modules/
+.next/
+dist/
+build/
+.venv/
+venv/
+*.log
+.turbo/
+.cache/

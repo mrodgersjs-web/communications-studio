@@ -14,3 +14,4 @@ venv/
 *.log
 .turbo/
 .cache/
+*.egg-info/

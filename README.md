@@ -1,6 +1,8 @@
 # communications-studio
 
 > Gated communication protocol engine — scored formulas, hard gates, executable composition.
+**Outcome:** `bash scripts/smoke.sh` runs pytest gates as the claim under test in a 60-second proof.
+
 
 ## Employer summary
 Control plane for written communication quality: formulas, gates, tournaments. Not a spray-and-pray bot pack. Private prospect corpora stay offline.

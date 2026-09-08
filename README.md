@@ -2,6 +2,8 @@
 
 > Gated communication protocol engine — scored formulas, hard gates, executable composition.
 **Outcome:** `bash scripts/smoke.sh` runs pytest gates as the claim under test in a 60-second proof.
+[![CI](https://img.shields.io/github/actions/workflow/status/mrodgersjs-web/communications-studio/ci.yml?branch=main)](https://github.com/mrodgersjs-web/communications-studio/actions/workflows/ci.yml)
+
 
 
 ## Employer summary

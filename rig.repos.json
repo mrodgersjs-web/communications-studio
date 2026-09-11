@@ -1,0 +1,16 @@
+{
+  "schema": "rig.repo-adapters.v1",
+  "repo": "mrodgersjs-web/communications-studio",
+  "tier": "B_PRODUCT_APP",
+  "supabase": {
+    "schema": "rig_shared",
+    "role": "communications-studio-agent"
+  },
+  "loops": {
+    "default": "iqrsqpi-v20",
+    "always_on": [
+      "gate-d-loop",
+      "proof-loop"
+    ]
+  }
+}

@@ -28,6 +28,9 @@ jobs:
       - name: Run tests
         run: python -m pytest tests -v
 
+      - name: MCP Gate-D wrapper regression
+        run: python -m pytest tests/test_gate_d_request_wrapper.py -v
+
       - name: Doctrine check
         run: |
           rig doctrine-check --artifact templates/cold-email.md --artifact templates/reply.md

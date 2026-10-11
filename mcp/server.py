@@ -12,13 +12,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+from rig_comm.integrations.rig_loop_gate_d import DEFAULT_RIG_LOOP, request_gate_d
+
 try:
     from mcp.server.fastmcp import FastMCP
 except ImportError:  # pragma: no cover
     sys.exit("pip install 'mcp[cli]' to run this results MCP server")
 
 ROOT = Path(__file__).resolve().parents[1]
-RIG_LOOP = Path.home() / "Developer/rig-capabilities/bin/rig-loop"
+RIG_LOOP = DEFAULT_RIG_LOOP
 mcp = FastMCP("rig-results")
 
 
@@ -45,14 +47,8 @@ def score() -> str:
 
 @mcp.tool()
 def request_effect(action: str, target: str, reason: str) -> str:
-    """Record a Gate-D request. Returns the pending request id; never executes."""
-    if not RIG_LOOP.exists():
-        return _j(error="platform rig-loop unavailable")
-    run = subprocess.run(
-        [str(RIG_LOOP), "gate-d", "request", "--action", action, "--target", target, "--reason", reason],
-        capture_output=True, text=True, cwd=ROOT,
-    )
-    return _j(exit=run.returncode, stdout=run.stdout[-800:], stderr=run.stderr[-400:])
+    """Record a Gate-D request. Returns queue status; never executes the effect."""
+    return _j(**request_gate_d(action, target, reason, rig_loop=RIG_LOOP, cwd=ROOT))
 
 
 if __name__ == "__main__":

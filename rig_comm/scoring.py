@@ -1,11 +1,10 @@
 """
-RIG Communication Protocol V10 — Python Scoring Engine
+RIG Communication Protocol V10 - Python Scoring Engine
 Implements all 8 scoring formulas from the master doctrine.
 """
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List
 import json
-import statistics
 
 
 @dataclass

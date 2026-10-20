@@ -1,10 +1,10 @@
-# Internal Communication — RIG Communication Protocol V10
+# Internal Communication - RIG Communication Protocol V10
 
 ## Structure
 
 ```
-Line 1: [WHAT YOU NEED FROM THEM — action, decision, or awareness]
-Line 2: [CONTEXT — only what they need to act]
+Line 1: [WHAT YOU NEED FROM THEM - action, decision, or awareness]
+Line 2: [CONTEXT - only what they need to act]
 Line 3: [DEADLINE if applicable]
 Line 4: [WHERE TO FIND MORE DETAIL if they want it]
 ```

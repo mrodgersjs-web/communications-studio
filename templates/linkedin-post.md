@@ -1,4 +1,4 @@
-# LinkedIn Post — RIG Communication Protocol V10
+# LinkedIn Post - RIG Communication Protocol V10
 
 ## 8-Step Structure
 

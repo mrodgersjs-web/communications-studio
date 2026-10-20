@@ -1,7 +1,7 @@
-# Cold Email — RIG Communication Protocol V10
+# Cold Email - RIG Communication Protocol V10
 
 ## Structure
-Subject: [Specific curiosity gap — name THEIR situation, not your product]
+Subject: [Specific curiosity gap - name THEIR situation, not your product]
 Body: Wound → Mirror → Mechanism hint → Autonomy + Qualification → Open Loop → Specific CTA
 
 ## Template
@@ -9,14 +9,14 @@ Body: Wound → Mirror → Mechanism hint → Autonomy + Qualification → Open 
 ```
 Subject: [Specific curiosity gap with number or named situation]
 
-[Name] —
+[Name] -
 
 [WOUND: Name the specific pattern costing them money, time, or opportunity.
-Use specific numbers if possible. Reference an observable signal — their website,
+Use specific numbers if possible. Reference an observable signal - their website,
 tech stack, job postings, or LinkedIn activity. This must be specific enough that
 it could NOT describe any other company.]
 
-[MIRROR + MECHANISM: Reflect their reality back to them. Add a mechanism hint —
+[MIRROR + MECHANISM: Reflect their reality back to them. Add a mechanism hint -
 what you'd do differently, without explaining how. The mirror proves understanding.
 The mechanism hint creates forward curiosity.]
 
@@ -29,9 +29,9 @@ A pattern you noticed that's harder to explain in an email. The specific
 diagnostic question that makes NOT responding feel like leaving a problem undiagnosed.]
 
 [CTA: Specific, time-bound, friction-removed. A held time slot that disappears.
-Not "would love to chat" — but a concrete next step with a deadline.]
+Not "would love to chat" - but a concrete next step with a deadline.]
 
-— [Name]
+- [Name]
 ```
 
 ## Example (+7σ)
@@ -39,7 +39,7 @@ Not "would love to chat" — but a concrete next step with a deadline.]
 ```
 Subject: Your board deck is missing slide 11
 
-Sarah —
+Sarah -
 
 Your pipeline shows 847 MQLs last quarter but your close rate dropped to 4.2%.
 That's not a volume problem. That's a qualification architecture problem.
@@ -47,13 +47,13 @@ That's not a volume problem. That's a qualification architecture problem.
 We rebuilt the qualification layer for [similar company] and their close rate
 went from 3.8% to 11.2% in 90 days. Same team. Same product. Different system.
 
-I'm not sure this is the right fit yet — that depends on how your pipeline
+I'm not sure this is the right fit yet - that depends on how your pipeline
 is structured. But there's a pattern in your funnel data that I'd want to
 confirm before saying more.
 
 15 minutes Thursday at 2pm is held. It disappears Friday.
 
-— Reg
+- Reg
 ```
 
 ## Deviation Targets

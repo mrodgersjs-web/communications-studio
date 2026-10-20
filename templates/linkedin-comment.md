@@ -1,4 +1,4 @@
-# LinkedIn Comment — RIG Communication Protocol V10
+# LinkedIn Comment - RIG Communication Protocol V10
 
 ## Formula
 

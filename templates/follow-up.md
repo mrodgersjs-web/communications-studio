@@ -1,34 +1,34 @@
-# Follow-Up Email — RIG Communication Protocol V10
+# Follow-Up Email - RIG Communication Protocol V10
 
 ## Structure
 
 ```
-[Name] —
+[Name] -
 
-[NEW WOUND OR NEW EVIDENCE — NOT "just following up"]
-[NEW INSIGHT — something they didn't have before]
+[NEW WOUND OR NEW EVIDENCE - NOT "just following up"]
+[NEW INSIGHT - something they didn't have before]
 
-[AUTONOMY — "if the timing has changed, no need to reply"]
-[OPEN LOOP — new unresolved element]
+[AUTONOMY - "if the timing has changed, no need to reply"]
+[OPEN LOOP - new unresolved element]
 
-— [Name]
+- [Name]
 ```
 
 ## Example (+5σ)
 
 ```
-Sarah —
+Sarah -
 
 Since my last note, [competitor] announced they're moving to the exact
 model I described. That changes the timeline on this.
 
 I wrote a 2-page analysis of what their move means for companies in
-your position. Happy to send it if useful — no strings.
+your position. Happy to send it if useful - no strings.
 
 If the timing has shifted, ignore this entirely. But if the board
 conversation is still live, the window on this is narrower than it was.
 
-— Reg
+- Reg
 ```
 
 ## Gate

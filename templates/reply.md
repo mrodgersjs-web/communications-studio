@@ -1,4 +1,4 @@
-# Email Reply — RIG Communication Protocol V10
+# Email Reply - RIG Communication Protocol V10
 
 ## Pre-Reply Analysis (Run Before Writing)
 
@@ -21,7 +21,7 @@ F) What tension should remain unresolved?
 ## Structure
 
 ```
-[Name] —
+[Name] -
 
 [WOUND: Name the specific pattern underneath their question.]
 
@@ -33,7 +33,7 @@ F) What tension should remain unresolved?
 
 [OPEN LOOP: Unresolved tension. Not a generic CTA.]
 
-— [Name]
+- [Name]
 ```
 
 ## Deviation Targets

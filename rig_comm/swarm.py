@@ -1,5 +1,5 @@
 """
-RIG Communication Protocol V10 — Prediction Swarm
+RIG Communication Protocol V10 - Prediction Swarm
 8 buyer personas forecasting trust delta, conversion, and engagement probabilities.
 """
 from dataclasses import dataclass

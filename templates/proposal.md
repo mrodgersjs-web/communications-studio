@@ -1,4 +1,4 @@
-# Proposal / Pitch — RIG Communication Protocol V10
+# Proposal / Pitch - RIG Communication Protocol V10
 
 ## Structure (Wound → Mechanism → Proof → Offer)
 
@@ -7,7 +7,7 @@ SECTION 1: THE WOUND
 What's costing them money right now. Specific, systemic, evidenced.
 
 SECTION 2: THE MECHANISM
-How RIG solves it. Not generic — specific to their situation.
+How RIG solves it. Not generic - specific to their situation.
 
 SECTION 3: THE PROOF
 Case studies, data, before/after. Named companies, specific metrics.

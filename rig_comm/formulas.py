@@ -1,18 +1,18 @@
 """
-RIG Communication Protocol V10 — Formula Registry
+RIG Communication Protocol V10 - Formula Registry
 All 8 scoring formulas, IDP (IdeaDeviationPotential) with 8 sub-components,
 and MemoryCompoundingScore. Each formula function takes a CommunicationScore
 and returns a float.
 """
 
 from dataclasses import dataclass
-from typing import Any, Callable, Dict
+from typing import Callable, Dict
 
 from .scoring import CommunicationScore
 
 
 # ============================================================================
-# IDP (IdeaDeviationPotential) — evaluates raw angles before the writing pipeline
+# IDP (IdeaDeviationPotential) - evaluates raw angles before the writing pipeline
 # ============================================================================
 
 @dataclass
@@ -262,20 +262,20 @@ def idp_classify(idp_score: float) -> str:
     0.00–0.49 → Generic
     """
     if idp_score >= 0.90:
-        return "Elite — Fast-track to ensemble draft. Ship candidate."
+        return "Elite - Fast-track to ensemble draft. Ship candidate."
     if idp_score >= 0.80:
-        return "Exceptional — Enter tournament at Round 3."
+        return "Exceptional - Enter tournament at Round 3."
     if idp_score >= 0.70:
-        return "Strong — Enter tournament normally."
+        return "Strong - Enter tournament normally."
     if idp_score >= 0.65:
-        return "Marginal — Enter tournament at lowest priority."
+        return "Marginal - Enter tournament at lowest priority."
     if idp_score >= 0.50:
-        return "Insufficient — KILL. Will never survive the pipeline."
-    return "Generic — KILL. Indistinguishable from median content."
+        return "Insufficient - KILL. Will never survive the pipeline."
+    return "Generic - KILL. Indistinguishable from median content."
 
 
 # ============================================================================
-# Formula Registry — all 8 scoring formulas
+# Formula Registry - all 8 scoring formulas
 # ============================================================================
 
 def comm_raw_score(score: CommunicationScore) -> float:
@@ -336,7 +336,7 @@ def email_reply_score(score: CommunicationScore) -> float:
 
 
 def bdf30(score: CommunicationScore) -> float:
-    """Formula 4: Bipolar Deviation Formula (BDF30) — LinkedIn posts.
+    """Formula 4: Bipolar Deviation Formula (BDF30) - LinkedIn posts.
 
     Measures how much a post deviates from the LinkedIn median.
     Gate: >= 8.0. Aspiration: +22σ.
@@ -353,7 +353,7 @@ def bdf30(score: CommunicationScore) -> float:
 
 
 def craft_coefficient(score: CommunicationScore) -> float:
-    """Formula 5: CraftCoefficient — max across 5 writing archetypes.
+    """Formula 5: CraftCoefficient - max across 5 writing archetypes.
 
     Takes the maximum of:
       EminemDensity, HemingwayCompression, DidionCadence,
@@ -413,7 +413,7 @@ def rpe(score: CommunicationScore, gamma: float = 0.9) -> float:
     V(sₜ):   expected value (generic vendor email baseline = 0.35)
     V(sₜ₊₁): predicted future value from the relationship
 
-    Goal: δₜ > 0 — deliver MORE than expected.
+    Goal: δₜ > 0 - deliver MORE than expected.
     """
     r_t = (
         score.wound_precision * score.specificity_density
@@ -512,7 +512,7 @@ def _test_all_formulas() -> None:
     )
 
     print("=" * 60)
-    print("  RIG Communications V10 — Formula Registry Test Harness")
+    print("  RIG Communications V10 - Formula Registry Test Harness")
     print("=" * 60)
 
     print("\n--- 8 Communication Formulas ---")

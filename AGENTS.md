@@ -1,4 +1,4 @@
-# RIG Communications V10 — Agent Notes
+# RIG Communications V10 - Agent Notes
 
 Load the full protocol before any communication work:
 ```bash

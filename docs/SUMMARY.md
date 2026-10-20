@@ -1,4 +1,4 @@
-# RIG Communications V10 — Complete Chat Session Summary
+# RIG Communications V10 - Complete Chat Session Summary
 
 ## What We Built
 
@@ -6,7 +6,7 @@ The **RIG Communication Protocol V10** is a complete, executable communication s
 
 ### The Core Innovation
 
-Every written communication is a **compound dopamine engine**: Wound → Mirror → Autonomy → Qualification → Open Loop. Five consecutive expectation violations that stack into a measurable Reward Prediction Error (δₜ > 0). The protocol is peer-reviewed — 102 fMRI studies (N=2,316) validate the RPE architecture, and all 8 scoring formulas are grounded in published research.
+Every written communication is a **compound dopamine engine**: Wound → Mirror → Autonomy → Qualification → Open Loop. Five consecutive expectation violations that stack into a measurable Reward Prediction Error (δₜ > 0). The protocol is peer-reviewed - 102 fMRI studies (N=2,316) validate the RPE architecture, and all 8 scoring formulas are grounded in published research.
 
 ## What Data We Have
 
@@ -14,7 +14,7 @@ Every written communication is a **compound dopamine engine**: Wound → Mirror 
 1. **CommRawScore** (universal, 12 weighted criteria)
 2. **EmailVoltageScore** (7 criteria, dopamine-optimized)
 3. **EmailReplyScore** (8 criteria, response-optimized)
-4. **BDF30** (6 criteria, bipolar deviation — target +22σ)
+4. **BDF30** (6 criteria, bipolar deviation - target +22σ)
 5. **CraftCoefficient** (5-archetype max-select)
 6. **CatchphraseScore** (6 criteria, Bayesian Surprise-gated)
 7. **CustomerFacingArtifactScore** (8 criteria, ship-gated at 82)
@@ -130,4 +130,4 @@ All formulas are grounded in Consensus.app research (170M+ papers searched) with
 
 ## Author
 
-RIG / Mike Rodgers — 2026. Built in a single extended chat session with Hermes Agent.
+RIG / Mike Rodgers - 2026. Built in a single extended chat session with Hermes Agent.

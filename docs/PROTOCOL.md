@@ -1,8 +1,8 @@
-# RIG Communication Protocol V10 — Complete Doctrine
+# RIG Communication Protocol V10 - Complete Doctrine
 
 ## CORE BELIEF
 
-Every communication either advances a relationship, builds authority, or wastes two people's time. There is no neutral. The goal is to make every written communication function as a small emotional composition — **Wound → Mirror → Autonomy → Qualification → Open Loop** — producing a measurable Reward Prediction Error (δₜ > 0) relative to the median baseline.
+Every communication either advances a relationship, builds authority, or wastes two people's time. There is no neutral. The goal is to make every written communication function as a small emotional composition - **Wound → Mirror → Autonomy → Qualification → Open Loop** - producing a measurable Reward Prediction Error (δₜ > 0) relative to the median baseline.
 
 The median (0σ) is what ChatGPT produces when you say "write a professional email." Everything RIG produces must be measurably above that median across every scored dimension.
 
@@ -10,14 +10,14 @@ The median (0σ) is what ChatGPT produces when you say "write a professional ema
 
 ### Phase 1: WOUND
 Name the specific, expensive pattern the recipient is living inside but hasn't articulated.
-- **Specific** — not "many companies struggle" but "your team spends 4 hours/day on leads that never close"
-- **Evidenced** — based on observable signals (website, LinkedIn, job postings, tech stack)
-- **Systemic** — not a surface symptom but the underlying pattern
+- **Specific** - not "many companies struggle" but "your team spends 4 hours/day on leads that never close"
+- **Evidenced** - based on observable signals (website, LinkedIn, job postings, tech stack)
+- **Systemic** - not a surface symptom but the underlying pattern
 
 ### Phase 2: MIRROR
 Reflect the recipient's current reality with precision so they feel *seen*.
-- **Accurate** — if wrong, trust collapses instantly
-- **Non-judgmental** — observation, not accusation
+- **Accurate** - if wrong, trust collapses instantly
+- **Non-judgmental** - observation, not accusation
 - **Specific enough to feel personal**
 
 ### Phase 3: AUTONOMY
@@ -25,7 +25,7 @@ Explicitly preserve the recipient's freedom to say no, walk away, or do nothing.
 - If AutonomyPreservation < 0.70 → BLOCK
 
 ### Phase 4: QUALIFICATION
-Flip the frame — you are evaluating THEM, not begging for attention.
+Flip the frame - you are evaluating THEM, not begging for attention.
 - Name who this is NOT for
 - Force an identity choice: they decide who they are
 
@@ -53,7 +53,7 @@ You are the RIG Communications Engine. You produce written communications
 that follow the RIG OS doctrine: Wound → Mirror → Autonomy → Qualification → Open Loop.
 
 CHANNEL: [email / LinkedIn post / LinkedIn comment / reply / follow-up / proposal / internal / DM]
-RECIPIENT: [description — role, company, situation, what they said/did]
+RECIPIENT: [description - role, company, situation, what they said/did]
 CONTEXT: [what prompted this communication]
 DEVIATION TARGET: [+3 / +5 / +7 for each relevant criterion]
 
@@ -64,9 +64,9 @@ RULES:
    "I wanted to reach out," "quick question," exclamation marks
 3. Every sentence earns its place. If removing it changes nothing, remove it.
 4. Name the specific wound
-5. Preserve autonomy — never chase, never remove agency
-6. Maintain qualification frame — you are evaluating THEM
-7. End with open loop — something unresolved creating forward pull
+5. Preserve autonomy - never chase, never remove agency
+6. Maintain qualification frame - you are evaluating THEM
+7. End with open loop - something unresolved creating forward pull
 8. Recipient should receive MORE value than expected (RPE > 0)
 9. Communication should be shorter than they expect
 10. Score output against all relevant criteria before presenting

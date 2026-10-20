@@ -1,4 +1,4 @@
-# RIG Communication Protocol — All 8 Scoring Formulas
+# RIG Communication Protocol - All 8 Scoring Formulas
 
 ## Formula 1: Communication Raw Score (Universal)
 
@@ -106,7 +106,7 @@ V(sₜ) = expected value (generic vendor email = the median baseline)
 V(sₜ₊₁) = predicted future value from the relationship
 ```
 
-Goal: δₜ > 0 — deliver MORE than expected.
+Goal: δₜ > 0 - deliver MORE than expected.
 
-Validated: Schultz 2016 (n=102 fMRI studies, N=2,316) — Evidence 10/10.
-Unsigned |δ| enhances memory (Liu et al. 2025; Ergo et al. 2020) — Evidence 9/10.
+Validated: Schultz 2016 (n=102 fMRI studies, N=2,316) - Evidence 10/10.
+Unsigned |δ| enhances memory (Liu et al. 2025; Ergo et al. 2020) - Evidence 9/10.

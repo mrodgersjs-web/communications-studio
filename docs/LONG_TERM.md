@@ -1,4 +1,4 @@
-# RIG Communications V10 — Long-Term Roadmap (V13 → V15)
+# RIG Communications V10 - Long-Term Roadmap (V13 → V15)
 
 ## V13: Ensemble Writer System
 

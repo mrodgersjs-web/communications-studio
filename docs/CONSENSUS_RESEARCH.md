@@ -6,13 +6,13 @@ All formulas and gates in the master communication protocol are grounded in peer
 
 ## 1. Reward Prediction Error: The Dopamine Engine
 
-**Finding:** The canonical RPE formula — δₜ = rₜ + γ·V(sₜ₊₁) − V(sₜ) — is the most robustly validated model in neuroscience literature (Schultz, 2016). A meta-analysis of 102 fMRI studies with 2,316 participants confirms dopamine neurons encode prediction errors that scale with unexpectedness (Fouragnan et al., 2018).
+**Finding:** The canonical RPE formula - δₜ = rₜ + γ·V(sₜ₊₁) − V(sₜ) - is the most robustly validated model in neuroscience literature (Schultz, 2016). A meta-analysis of 102 fMRI studies with 2,316 participants confirms dopamine neurons encode prediction errors that scale with unexpectedness (Fouragnan et al., 2018).
 
-**RIG Operationalization:** The median baseline (16-32 generic artifacts) = V(sₜ). The shipped artifact = rₜ. The Robust-MAD-Z score IS the δₜ — the prediction error measured in standard deviations. Requiring MAD-Z ≥ 8.0 means requiring a dopamine-triggering RPE 8σ above expectation.
+**RIG Operationalization:** The median baseline (16-32 generic artifacts) = V(sₜ). The shipped artifact = rₜ. The Robust-MAD-Z score IS the δₜ - the prediction error measured in standard deviations. Requiring MAD-Z ≥ 8.0 means requiring a dopamine-triggering RPE 8σ above expectation.
 
-**Critical finding for bipolar architecture:** Unsigned prediction error |δ| — meaning BOTH positive and negative deviation — enhances memory encoding (Liu et al., 2025; Ergo et al., 2020). Evidence: 9/10. A one-word "Pass" reply (-16 erosion) creates as much memory trace as a 500-word manifesto (+16 detonation) because both generate high |δ|. This validates the bipolar architecture where both poles ship.
+**Critical finding for bipolar architecture:** Unsigned prediction error |δ| - meaning BOTH positive and negative deviation - enhances memory encoding (Liu et al., 2025; Ergo et al., 2020). Evidence: 9/10. A one-word "Pass" reply (-16 erosion) creates as much memory trace as a 500-word manifesto (+16 detonation) because both generate high |δ|. This validates the bipolar architecture where both poles ship.
 
-**Boundary condition:** RPE signals are modulated by attention (Smout et al., 2019). If the audience isn't paying attention, the prediction error doesn't fire. This validates Hook Velocity — the first 1.5 seconds must capture attention BEFORE the RPE can land.
+**Boundary condition:** RPE signals are modulated by attention (Smout et al., 2019). If the audience isn't paying attention, the prediction error doesn't fire. This validates Hook Velocity - the first 1.5 seconds must capture attention BEFORE the RPE can land.
 
 **Maps to:** BDF30 formula, Robust-MAD-Z gate (≥ 8.0σ), Hook Velocity, Bipolar architecture
 
@@ -20,7 +20,7 @@ All formulas and gates in the master communication protocol are grounded in peer
 
 ## 2. Bayesian Surprise: Catchphrase Science
 
-**Finding:** S = D_KL(P_posterior || P_prior) — Bayesian Surprise measured as KL divergence between prior and posterior beliefs. 72%+ of gaze shifts directed toward high-surprise regions (Itti & Baldi, 2005). Evidence: 8/10.
+**Finding:** S = D_KL(P_posterior || P_prior) - Bayesian Surprise measured as KL divergence between prior and posterior beliefs. 72%+ of gaze shifts directed toward high-surprise regions (Itti & Baldi, 2005). Evidence: 8/10.
 
 **RIG Operationalization:** Every semantic inversion ("prompt engineering → prompt costume design") is a Bayesian surprise generator. The reader's prior belief about what a LinkedIn post will say gets violently updated by the actual content.
 
@@ -38,7 +38,7 @@ Maps to existing gate: CatchphraseScore ≥ 0.80
 
 ## 3. Shannon Entropy: Anti-Generic Mathematical Proof
 
-**Finding:** H(p) = -Σ p(x)·log₂(p(x)) — higher entropy predicts longer reading times and greater attention allocation (Brydevall et al., 2017; Dean & Neligh, 2023; Pimentel et al., 2022). Evidence: 8/10.
+**Finding:** H(p) = -Σ p(x)·log₂(p(x)) - higher entropy predicts longer reading times and greater attention allocation (Brydevall et al., 2017; Dean & Neligh, 2023; Pimentel et al., 2022). Evidence: 8/10.
 
 **RIG Operationalization:**
 ```
@@ -47,7 +47,7 @@ Gate: ratio > 1.2 (artifact must be ≥20% more entropic than median baseline)
 Hard kill: AntiGenericForce < 80 (existing gate, now grounded in entropy theory)
 ```
 
-**Boundary condition:** Entropy-based models require adaptation when cognitive resources are limited (Dean & Neligh, 2023). For mobile-first LinkedIn consumption, entropy must be balanced with compression — high information density per syllable, not high word count. This validates the HemingwayCompression archetype and the RestraintCoefficient gate (≥ 0.80 for artifacts > 200 words).
+**Boundary condition:** Entropy-based models require adaptation when cognitive resources are limited (Dean & Neligh, 2023). For mobile-first LinkedIn consumption, entropy must be balanced with compression - high information density per syllable, not high word count. This validates the HemingwayCompression archetype and the RestraintCoefficient gate (≥ 0.80 for artifacts > 200 words).
 
 **Maps to:** AntiGenericForce gate (≥ 80), HemingwayCompression archetype, RestraintCoefficient
 
@@ -57,7 +57,7 @@ Hard kill: AntiGenericForce < 80 (existing gate, now grounded in entropy theory)
 
 **Finding:** Reactance ∝ Threat_Level × Importance_of_Freedom. Meta-analysis of k=53 studies: high-threat language increases reactance (r ≈ .20), anger (r ≈ .21), negative cognitions (r ≈ .17) (Li & Shi, 2025; Rosenberg & Siegel, 2017). Evidence: 8/10.
 
-**RIG Operationalization:** Every banned phrase — "Just checking in," "Following up," "Happy to help" — is a high-threat-language trigger empirically shown to increase resistance. The Autonomy Preservation gate (≥ 0.70) is a reactance mitigation engine.
+**RIG Operationalization:** Every banned phrase - "Just checking in," "Following up," "Happy to help" - is a high-threat-language trigger empirically shown to increase resistance. The Autonomy Preservation gate (≥ 0.70) is a reactance mitigation engine.
 
 ```
 ReactanceRisk = Σ(ThreatMarkers × FreedomImportance) / TotalSentences
@@ -65,7 +65,7 @@ Gate: ReactanceRisk < 0.20 (maps to r ≈ .20 threshold from meta-analysis)
 Existing gate: AutonomyPreservation ≥ 0.70 → BLOCK if violated
 ```
 
-**Critical RIG design choice validated:** Gain vs. loss framing does NOT significantly affect reactance (Li & Shi, 2025). RIG's loss-framing approach — "waiting is not neutral if the pattern is already costing you [specific loss]" — is safe. Loss frames don't trigger reactance. Imperative language does. The doctrine correctly uses loss frames while preserving autonomy.
+**Critical RIG design choice validated:** Gain vs. loss framing does NOT significantly affect reactance (Li & Shi, 2025). RIG's loss-framing approach - "waiting is not neutral if the pattern is already costing you [specific loss]" - is safe. Loss frames don't trigger reactance. Imperative language does. The doctrine correctly uses loss frames while preserving autonomy.
 
 **Maps to:** Autonomy Preservation gate, Banned Phrases list, ReactanceRisk metric
 
@@ -142,7 +142,7 @@ Each phase generates a separate δₜ. Five consecutive expectation violations t
 
 ## Research Gaps & RIG's Response
 
-**Gap 1: Text-specific neural validation remains underexplored.** Most RPE/entropy studies are in lab settings, not professional communication. RIG's Brier loop IS the missing research — every shipped artifact becomes a data point.
+**Gap 1: Text-specific neural validation remains underexplored.** Most RPE/entropy studies are in lab settings, not professional communication. RIG's Brier loop IS the missing research - every shipped artifact becomes a data point.
 
 **Gap 2: Individual differences moderate everything.** Trait reactance, cognitive load, domain expertise all moderate audience response. The 8-persona Prediction Swarm models this variance explicitly.
 

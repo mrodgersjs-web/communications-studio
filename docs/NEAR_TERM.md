@@ -1,4 +1,4 @@
-# RIG Communications V10 — Near-Term Roadmap (V11 → V12)
+# RIG Communications V10 - Near-Term Roadmap (V11 → V12)
 
 ## V11: Autonomous Signal Detection
 
@@ -10,13 +10,13 @@ Each signal agent is a specialized CrewAI/LangGraph agent that monitors one sign
 
 ```
 Signal Agent Fleet:
-├── S1: Orthodoxy Scanner — monitors industry reports, conference keynotes, top LinkedIn voices
-├── S2: Wound Listener — monitors Reddit, forums, G2 reviews, Slack communities
-├── S3: Vocabulary Tracker — monitors arXiv abstracts, product launches, VC decks
-├── S4: Villain Spotter — monitors post-mortems, audit reports, public failures
-├── S5: Proof Gap Detector — monitors competitor content for unsupported claims
-├── S6: Format Exhaustion Monitor — monitors LinkedIn feed for format cloning frequency
-└── S7: Adjacent Collision Scanner — monitors academic papers from unrelated fields
+├── S1: Orthodoxy Scanner - monitors industry reports, conference keynotes, top LinkedIn voices
+├── S2: Wound Listener - monitors Reddit, forums, G2 reviews, Slack communities
+├── S3: Vocabulary Tracker - monitors arXiv abstracts, product launches, VC decks
+├── S4: Villain Spotter - monitors post-mortems, audit reports, public failures
+├── S5: Proof Gap Detector - monitors competitor content for unsupported claims
+├── S6: Format Exhaustion Monitor - monitors LinkedIn feed for format cloning frequency
+└── S7: Adjacent Collision Scanner - monitors academic papers from unrelated fields
 ```
 
 ### Implementation Plan
@@ -134,5 +134,5 @@ src/writers/wallace.py            # Archetype agent
 ### Target Metrics
 - Tournament completes in < 10 minutes (50 angles → 1 winner)
 - BDF30 selection rate: > 0.85 (winner exceeds gate)
-- Adversarial kill rate: 40-60% (healthy — not all survive)
+- Adversarial kill rate: 40-60% (healthy - not all survive)
 - Ensemble diversity: All 5 archetypes produce measurably different drafts (CraftCoefficient spread > 0.15)

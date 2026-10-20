@@ -1,10 +1,10 @@
-# Universal Hard Gates — Nothing Ships Without Passing
+# Universal Hard Gates - Nothing Ships Without Passing
 
 ## Sequence Integrity
 
 ```
 if (WoundPhase == missing)              → BLOCK("No wound identified")
-if (MirrorPhase == missing)             → BLOCK("No mirror — recipient won't feel understood")
+if (MirrorPhase == missing)             → BLOCK("No mirror - recipient won't feel understood")
 if (AutonomyPreservation < 0.70)        → BLOCK("Chasing detected. Rewrite.")
 if (BannedPhrase detected)              → BLOCK("Generic phrase: [phrase]. Remove.")
 ```
@@ -66,11 +66,11 @@ if (SendRisk.manipulation > 0.20)       → BLOCK("Manipulation detected.")
 ## Peer-Reviewed Gates
 
 ```
-// Entropy gate — validated: Brydevall et al. 2017; Dean & Neligh 2023; Pimentel et al. 2022
+// Entropy gate - validated: Brydevall et al. 2017; Dean & Neligh 2023; Pimentel et al. 2022
 if (AntiGenericForce_entropy < 1.2)     → BLOCK("Not enough deviation from median baseline")
 // AntiGenericForce_entropy = H(artifact) / H(median_baseline)
 
-// Reactance gate — validated: Li & Shi 2025 (k=53 studies, r ≈ .20 threshold)
+// Reactance gate - validated: Li & Shi 2025 (k=53 studies, r ≈ .20 threshold)
 if (ReactanceRisk > 0.20)               → BLOCK("Reactance threshold exceeded")
 // ReactanceRisk = Σ(ThreatMarkers × FreedomImportance) / TotalSentences
 ```

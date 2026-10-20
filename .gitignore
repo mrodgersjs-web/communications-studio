@@ -15,3 +15,7 @@ venv/
 .turbo/
 .cache/
 *.egg-info/
+
+# coverage output
+.coverage
+htmlcov/

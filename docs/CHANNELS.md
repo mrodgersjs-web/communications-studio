@@ -2,7 +2,7 @@
 
 ## Cold Email
 
-**Subject:** [Specific curiosity gap — name THEIR situation, not your product]
+**Subject:** [Specific curiosity gap - name THEIR situation, not your product]
 **Structure:** Wound → Mirror → Mechanism hint → Autonomy + Qualification → Open Loop → Specific CTA
 **Deviation targets:** E1-E4: +5 to +7 | E5: +3 to +5 | All E ≥ +3 to ship
 
@@ -10,7 +10,7 @@
 ```
 Subject: Your board deck is missing slide 11
 
-Sarah —
+Sarah -
 
 Your pipeline shows 847 MQLs last quarter but your close rate dropped to 4.2%.
 That's not a volume problem. That's a qualification architecture problem.
@@ -18,13 +18,13 @@ That's not a volume problem. That's a qualification architecture problem.
 We rebuilt the qualification layer for [similar company] and their close rate
 went from 3.8% to 11.2% in 90 days. Same team. Same product. Different system.
 
-I'm not sure this is the right fit yet — that depends on how your pipeline
+I'm not sure this is the right fit yet - that depends on how your pipeline
 is structured. But there's a pattern in your funnel data that I'd want to
 confirm before saying more.
 
 15 minutes Thursday at 2pm is held. It disappears Friday.
 
-— Reg
+- Reg
 ```
 
 ## Email Reply
@@ -75,19 +75,19 @@ F) What tension should remain unresolved?
 **Structure:** The Wound → The Mechanism → The Proof → The Offer → The Open Loop
 **Target:** All criteria +5 to +7 | CFAS ≥ 82 | AntiGenericForce ≥ 80
 
-## Deviation Ladders — Email
+## Deviation Ladders - Email
 
 | Lv | Subject | Opening | CTA |
 |----|---------|---------|-----|
-| **-10** | [No subject] | No greeting, pure command | No CTA — statement only |
-| **-5** | Single word: "Tuesday" | Name only ("Sarah —") | Implicit — next step obvious |
+| **-10** | [No subject] | No greeting, pure command | No CTA - statement only |
+| **-5** | Single word: "Tuesday" | Name only ("Sarah -") | Implicit - next step obvious |
 | **0** | "Quick question" / "Following up" | "Hope this finds you well" | "Let me know your thoughts" |
 | **+3** | Specific curiosity gap + number | Names something proving research | Specific + time-bound + friction-removed |
-| **+5** | Pattern interrupt — insider knowledge | Reframes situation in 12 words | Behavioral voltage: loss + scarcity |
+| **+5** | Pattern interrupt - insider knowledge | Reframes situation in 12 words | Behavioral voltage: loss + scarcity |
 | **+7** | Reframes recipient's reality | Changes emotional state in 12 words | Not responding feels like a loss |
 | **+10** | Becomes a meme people forward | Changes emotional state in 12 words | CTA becomes something others study |
 
-## Deviation Ladders — LinkedIn
+## Deviation Ladders - LinkedIn
 
 | Lv | Perspective | Evidence | Structure |
 |----|------------|----------|-----------|
@@ -102,12 +102,12 @@ F) What tension should remain unresolved?
 
 | Output | E1 | E2 | E3 | E4 | E5 | L1 | L2 | L3 | L4 | L5 | Min to Ship |
 |--------|----|----|----|----|----|----|----|----|----|----|-------------|
-| Cold email | +5-7 | +5-7 | +5-7 | +5-7 | +3-5 | — | — | — | — | — | All E ≥ +3 |
-| Warm follow-up | +3-5 | +3-5 | +3-5 | +3-5 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
-| Client reply | +1-3 | +3-5 | +3-5 | +3-5 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
-| Internal | -3+1 | -3+1 | +1-3 | +1-3 | +1-3 | — | — | — | — | — | E3 ≥ +1 |
-| Proposal | +3-5 | +5-7 | +5-7 | +5-7 | +5-7 | — | — | — | — | — | All E ≥ +5 |
-| Thought leadership | — | — | — | — | — | +5-8 | +5-7 | +5-7 | +5-7 | +5-7 | L1 ≥ +5 |
-| Quick take | — | — | — | — | — | +3-5 | +1-3 | +1-3 | +3-5 | +3-5 | L1 ≥ +3 |
-| Comment | — | — | — | — | — | +3-5 | +3-5 | — | +3-5 | +3-5 | L4 ≥ +3 |
-| DM / text | +1-3 | +1-3 | +3-5 | +1-3 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
+| Cold email | +5-7 | +5-7 | +5-7 | +5-7 | +3-5 | - | - | - | - | - | All E ≥ +3 |
+| Warm follow-up | +3-5 | +3-5 | +3-5 | +3-5 | +3-5 | - | - | - | - | - | E3 ≥ +3 |
+| Client reply | +1-3 | +3-5 | +3-5 | +3-5 | +3-5 | - | - | - | - | - | E3 ≥ +3 |
+| Internal | -3+1 | -3+1 | +1-3 | +1-3 | +1-3 | - | - | - | - | - | E3 ≥ +1 |
+| Proposal | +3-5 | +5-7 | +5-7 | +5-7 | +5-7 | - | - | - | - | - | All E ≥ +5 |
+| Thought leadership | - | - | - | - | - | +5-8 | +5-7 | +5-7 | +5-7 | +5-7 | L1 ≥ +5 |
+| Quick take | - | - | - | - | - | +3-5 | +1-3 | +1-3 | +3-5 | +3-5 | L1 ≥ +3 |
+| Comment | - | - | - | - | - | +3-5 | +3-5 | - | +3-5 | +3-5 | L4 ≥ +3 |
+| DM / text | +1-3 | +1-3 | +3-5 | +1-3 | +3-5 | - | - | - | - | - | E3 ≥ +3 |

@@ -1,4 +1,4 @@
-# Evaluation strategy — Communications Studio
+# Evaluation strategy - Communications Studio
 
 ## Gates
 | Gate | Command | Pass |

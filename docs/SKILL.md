@@ -1,6 +1,6 @@
 ---
 name: rig-communication-protocol
-description: Master RIG communication engine — cold email, warm email, reply, LinkedIn post, LinkedIn comment, Slack, DM, proposal, follow-up. Loads Wound→Mirror→Autonomy→Qualification→Open Loop protocol, 8 scoring formulas, 50 deviation-engine questions, 20 GitHub signal repos, Consensus-validated formulas, BDF30/CraftCoefficient/CatchphraseScore gates, prediction swarm, tournament architecture, and channel-specific protocols. Use when writing or evaluating any RIG external communication. The complete V10 doctrine in one slash command.
+description: Master RIG communication engine - cold email, warm email, reply, LinkedIn post, LinkedIn comment, Slack, DM, proposal, follow-up. Loads Wound→Mirror→Autonomy→Qualification→Open Loop protocol, 8 scoring formulas, 50 deviation-engine questions, 20 GitHub signal repos, Consensus-validated formulas, BDF30/CraftCoefficient/CatchphraseScore gates, prediction swarm, tournament architecture, and channel-specific protocols. Use when writing or evaluating any RIG external communication. The complete V10 doctrine in one slash command.
 version: 10.0.0
 author: RIG / Mike Rodgers
 license: Proprietary
@@ -10,13 +10,13 @@ metadata:
     related_skills: [rig-operator-doctrine, rig-creative-context, rig-fleet-execution]
 ---
 
-# RIG Communication Protocol V10 — Unified Master Skill
+# RIG Communication Protocol V10 - Unified Master Skill
 
-Slash command: `/rig-communication-protocol` — loads the complete executable communication engine.
+Slash command: `/rig-communication-protocol` - loads the complete executable communication engine.
 
 ## CORE BELIEF
 
-Every communication either advances a relationship, builds authority, or wastes two people's time. There is no neutral. The goal is to make every written communication function as a small emotional composition — **Wound → Mirror → Autonomy → Qualification → Open Loop** — producing a measurable Reward Prediction Error (δₜ > 0) relative to the median baseline.
+Every communication either advances a relationship, builds authority, or wastes two people's time. There is no neutral. The goal is to make every written communication function as a small emotional composition - **Wound → Mirror → Autonomy → Qualification → Open Loop** - producing a measurable Reward Prediction Error (δₜ > 0) relative to the median baseline.
 
 The median (0σ) is what ChatGPT produces when you say "write a professional email." Everything RIG produces must be measurably above that median across every scored dimension. **Peer-reviewed validation:** 102 fMRI studies (N=2,316) confirm dopamine neurons encode prediction errors scaling with unexpectedness (Schultz 2016; Fouragnan et al. 2018). Your BDF30 formula is literally an RPE engine.
 
@@ -27,22 +27,22 @@ The median (0σ) is what ChatGPT produces when you say "write a professional ema
 ### Phase 1: WOUND
 Name the specific, expensive pattern the recipient is living inside but hasn't articulated.
 
-- **Specific** — not "many companies struggle" but "your team spends 4 hours/day on leads that never close"
-- **Evidenced** — based on observable signals (website, LinkedIn, job postings, tech stack)
-- **Systemic** — not a surface symptom but the underlying pattern
+- **Specific** - not "many companies struggle" but "your team spends 4 hours/day on leads that never close"
+- **Evidenced** - based on observable signals (website, LinkedIn, job postings, tech stack)
+- **Systemic** - not a surface symptom but the underlying pattern
 
 Gate: `if Wound Precision < 0.6 → BLOCK("Wound is generic")`
 Gate: `if Phase missing → BLOCK("No wound identified")`
 
 ### Phase 2: MIRROR
-Reflect the recipient's current reality with enough precision they feel *seen* — not handled, not diagnosed.
+Reflect the recipient's current reality with enough precision they feel *seen* - not handled, not diagnosed.
 
-- **Accurate** — if wrong, trust collapses instantly
-- **Non-judgmental** — observation, not accusation
+- **Accurate** - if wrong, trust collapses instantly
+- **Non-judgmental** - observation, not accusation
 - **Specific enough to feel personal**
 
-Gate: `if Phase missing → BLOCK("No mirror — recipient won't feel understood")`
-Test: Recipient should think "How did they know that?" — not "That's a nice thing to say."
+Gate: `if Phase missing → BLOCK("No mirror - recipient won't feel understood")`
+Test: Recipient should think "How did they know that?" - not "That's a nice thing to say."
 
 ### Phase 3: AUTONOMY
 Explicitly preserve the recipient's freedom to say no, walk away, or do nothing.
@@ -57,7 +57,7 @@ Gate: `if AutonomyPreservation < 0.70 → BLOCK("Chasing detected. Rewrite.")`
 "Just checking in" | "Following up" | "Touching base" | "Would love to chat" | "Let me know your thoughts" | "Happy to help" | "Hope this email finds you well" | "I wanted to reach out" | "Quick question" | "Looking forward to hearing from you"
 
 ### Phase 4: QUALIFICATION
-Flip the frame — you are evaluating THEM, not begging for their attention.
+Flip the frame - you are evaluating THEM, not begging for their attention.
 
 - Name who this is NOT for
 - Define conditions under which you'd walk away
@@ -67,12 +67,12 @@ Gate: `if QualificationTension < 0.5 → WARN("No selective pressure")`
 Test: Recipient feels they need to *earn* the next step, not be *sold* it.
 
 ### Phase 5: OPEN LOOP
-End with unresolved tension — a diagnostic question, a cost-of-inaction frame, or a next step so specific that NOT responding feels like a tangible loss.
+End with unresolved tension - a diagnostic question, a cost-of-inaction frame, or a next step so specific that NOT responding feels like a tangible loss.
 
 - Do NOT close with generic CTA
 - Leave a specific thread unresolved
 - Frame inaction as a decision with a named cost
-- Peer-reviewed backing: Zeigarnik effect — incomplete tasks create persistent cognitive tension
+- Peer-reviewed backing: Zeigarnik effect - incomplete tasks create persistent cognitive tension
 
 Gate: `if ends with generic CTA ("let me know" / "looking forward") → BLOCK`
 
@@ -133,7 +133,7 @@ CatchphraseScore = 0.25*Memorability + 0.20*SonicEdge + 0.20*EnemyClarity
                  + 0.15*CrossChannelSurvival + 0.10*CompressionElegance + 0.10*IdentityStamp
 ```
 Gate: `CatchphraseScore ≥ 0.80`
-Also: `CatchphraseSurprise ≈ D_KL(reader_posterior || reader_prior)` — if catchphrase appears in >5% of existing posts on this topic, too low → REWRITE.
+Also: `CatchphraseSurprise ≈ D_KL(reader_posterior || reader_prior)` - if catchphrase appears in >5% of existing posts on this topic, too low → REWRITE.
 
 ### Formula 7: CustomerFacing Artifact Score
 ```
@@ -152,9 +152,9 @@ rₜ = actual reward (value delivered by THIS communication)
 V(sₜ) = expected value (generic vendor email = the median baseline)
 V(sₜ₊₁) = predicted future value from the relationship
 ```
-Goal: δₜ > 0 — deliver MORE than expected. That delta IS the RPE. That's the dopamine signal.
-Validated by: Schultz 2016 (n=102 fMRI studies, N=2,316) — Evidence 10/10.
-Unsigned |δ| enhances memory (Liu et al. 2025; Ergo et al. 2020) — Evidence 9/10.
+Goal: δₜ > 0 - deliver MORE than expected. That delta IS the RPE. That's the dopamine signal.
+Validated by: Schultz 2016 (n=102 fMRI studies, N=2,316) - Evidence 10/10.
+Unsigned |δ| enhances memory (Liu et al. 2025; Ergo et al. 2020) - Evidence 9/10.
 
 ---
 
@@ -169,7 +169,7 @@ if (BannedPhrase detected)              → BLOCK("Generic phrase: [phrase]")
 
 // Quality thresholds
 if (WoundPrecision < 0.60)              → BLOCK("Wound is generic")
-if (SpecificityDensity < 0.50)          → BLOCK("Too vague — add numbers, names, evidence")
+if (SpecificityDensity < 0.50)          → BLOCK("Too vague - add numbers, names, evidence")
 if (CommRawScore < 0.65)                → BLOCK("Below doctrine threshold")
 
 // Customer-facing
@@ -207,7 +207,7 @@ if (ReactanceRisk > 0.20)               → BLOCK("Reactance threshold exceeded"
 ## PART 4: CHANNEL-SPECIFIC PROTOCOLS (Quick-Reference)
 
 ### Cold Email
-Subject: [Specific curiosity gap — name THEIR situation, not your product]
+Subject: [Specific curiosity gap - name THEIR situation, not your product]
 Structure: Wound → Mirror → Mechanism hint → Autonomy + Qualification → Open Loop → Specific CTA
 Deviation targets: E1-E4: +5 to +7 | E5: +3 to +5 | All E ≥ +3 to ship
 Example (+7σ): "Your board deck is missing slide 11"
@@ -278,11 +278,11 @@ if (PredictedSuccess < 0.82) → ITERATE until passing
 ### Email Deviation
 | Lv | Subject | Opening | CTA |
 |----|---------|---------|-----|
-| **-10** | [No subject] | No greeting, pure command | No CTA — statement only |
-| **-5** | Single word: "Tuesday" | Name only (Sarah —) | Implicit — next step obvious |
+| **-10** | [No subject] | No greeting, pure command | No CTA - statement only |
+| **-5** | Single word: "Tuesday" | Name only (Sarah -) | Implicit - next step obvious |
 | **0** | "Quick question" / "Following up" | "Hope this finds you well" | "Let me know your thoughts" |
 | **+3** | Specific curiosity gap + number | Names something proving research | Specific + time-bound + friction-removed |
-| **+5** | Pattern interrupt — insider knowledge | Reframes their situation in 12 words | Behavioral voltage: loss + scarcity |
+| **+5** | Pattern interrupt - insider knowledge | Reframes their situation in 12 words | Behavioral voltage: loss + scarcity |
 | **+7** | Reframes recipient's reality | Changes emotional state in 12 words | Not responding feels like a loss |
 | **+10** | Becomes a meme people forward | Changes their emotional state in 12 words | CTA becomes something others study |
 
@@ -302,15 +302,15 @@ if (PredictedSuccess < 0.82) → ITERATE until passing
 
 | Output | E1 | E2 | E3 | E4 | E5 | L1 | L2 | L3 | L4 | L5 | Min to Ship |
 |--------|----|----|----|----|----|----|----|----|----|----|-------------|
-| Cold email | +5-7 | +5-7 | +5-7 | +5-7 | +3-5 | — | — | — | — | — | All E ≥ +3 |
-| Warm follow-up | +3-5 | +3-5 | +3-5 | +3-5 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
-| Client reply | +1-3 | +3-5 | +3-5 | +3-5 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
-| Internal | -3+1 | -3+1 | +1-3 | +1-3 | +1-3 | — | — | — | — | — | E3 ≥ +1 |
-| Proposal | +3-5 | +5-7 | +5-7 | +5-7 | +5-7 | — | — | — | — | — | All E ≥ +5 |
-| Thought leadership | — | — | — | — | — | +5-8 | +5-7 | +5-7 | +5-7 | +5-7 | L1 ≥ +5 |
-| Quick take | — | — | — | — | — | +3-5 | +1-3 | +1-3 | +3-5 | +3-5 | L1 ≥ +3 |
-| Comment | — | — | — | — | — | +3-5 | +3-5 | — | +3-5 | +3-5 | L4 ≥ +3 |
-| DM / text | +1-3 | +1-3 | +3-5 | +1-3 | +3-5 | — | — | — | — | — | E3 ≥ +3 |
+| Cold email | +5-7 | +5-7 | +5-7 | +5-7 | +3-5 | - | - | - | - | - | All E ≥ +3 |
+| Warm follow-up | +3-5 | +3-5 | +3-5 | +3-5 | +3-5 | - | - | - | - | - | E3 ≥ +3 |
+| Client reply | +1-3 | +3-5 | +3-5 | +3-5 | +3-5 | - | - | - | - | - | E3 ≥ +3 |
+| Internal | -3+1 | -3+1 | +1-3 | +1-3 | +1-3 | - | - | - | - | - | E3 ≥ +1 |
+| Proposal | +3-5 | +5-7 | +5-7 | +5-7 | +5-7 | - | - | - | - | - | All E ≥ +5 |
+| Thought leadership | - | - | - | - | - | +5-8 | +5-7 | +5-7 | +5-7 | +5-7 | L1 ≥ +5 |
+| Quick take | - | - | - | - | - | +3-5 | +1-3 | +1-3 | +3-5 | +3-5 | L1 ≥ +3 |
+| Comment | - | - | - | - | - | +3-5 | +3-5 | - | +3-5 | +3-5 | L4 ≥ +3 |
+| DM / text | +1-3 | +1-3 | +3-5 | +1-3 | +3-5 | - | - | - | - | - | E3 ≥ +3 |
 
 ---
 
@@ -338,7 +338,7 @@ You are the RIG Communications Engine. You produce written communications
 that follow the RIG OS doctrine: Wound → Mirror → Autonomy → Qualification → Open Loop.
 
 CHANNEL: [email / LinkedIn post / LinkedIn comment / reply / follow-up / proposal / internal / DM]
-RECIPIENT: [description — role, company, situation, what they said/did]
+RECIPIENT: [description - role, company, situation, what they said/did]
 CONTEXT: [what prompted this communication]
 DEVIATION TARGET: [+3 / +5 / +7 for each relevant criterion]
 
@@ -348,10 +348,10 @@ RULES:
    "let me know your thoughts," "happy to help," "hope this finds you well," 
    "I wanted to reach out," "quick question," exclamation marks
 3. Every sentence earns its place. If removing it changes nothing, remove it.
-4. Name the specific wound — not "many companies struggle" but the exact pattern costing THIS recipient money
-5. Preserve autonomy — never chase, never pressure, never remove agency
-6. Maintain qualification frame — you are evaluating THEM
-7. End with open loop — something unresolved creating forward pull
+4. Name the specific wound - not "many companies struggle" but the exact pattern costing THIS recipient money
+5. Preserve autonomy - never chase, never pressure, never remove agency
+6. Maintain qualification frame - you are evaluating THEM
+7. End with open loop - something unresolved creating forward pull
 8. Recipient should receive MORE value than expected (RPE > 0)
 9. Communication should be shorter than they expect
 10. Score output against all relevant criteria before presenting
@@ -394,7 +394,7 @@ Every shipped artifact records:
 MCS = 0.30*DoctrineThreadContinuity + 0.25*OptimalSpacingAdherence
     + 0.25*CatchphraseRecurrence + 0.20*VillainClassConsistency
 ```
-Optimal ISI (Inter-Session Interval) for LinkedIn series: 3-6 days. Validated: Latimier et al. 2020 — 150% recall improvement with optimal spacing. Evidence: 9/10.
+Optimal ISI (Inter-Session Interval) for LinkedIn series: 3-6 days. Validated: Latimier et al. 2020 - 150% recall improvement with optimal spacing. Evidence: 9/10.
 
 ---
 
@@ -407,7 +407,7 @@ ReactanceRisk = Σ(ThreatMarkers × FreedomImportance) / TotalSentences
 Gate: ReactanceRisk < 0.20
 ```
 
-Gain vs loss framing does NOT significantly affect reactance — RIG's loss-framing approach ("waiting is not neutral") is safe. Imperative commands ARE the threat. The banned phrases list is a reactance mitigation engine.
+Gain vs loss framing does NOT significantly affect reactance - RIG's loss-framing approach ("waiting is not neutral") is safe. Imperative commands ARE the threat. The banned phrases list is a reactance mitigation engine.
 
 ---
 
@@ -430,4 +430,4 @@ Load `references/signal-detection-repos.md` for 20 GitHub signal detection tools
 Load `references/consensus-research-mapping.md` for peer-reviewed formula validation.
 Load `references/idp-formula-card.md` for the IdeaDeviationPotential scoring card.
 
-**The governing principle:** The recipient expected a generic vendor email — they received a diagnostic insight. That delta IS the Reward Prediction Error. That's what creates the dopamine signal. If it could have been written by any competent consultant, it fails.
+**The governing principle:** The recipient expected a generic vendor email - they received a diagnostic insight. That delta IS the Reward Prediction Error. That's what creates the dopamine signal. If it could have been written by any competent consultant, it fails.

@@ -11,7 +11,7 @@ All 7 signal layers run autonomously. Each produces a **Signal Card**:
   source: "...",
   detection_date: "...",
   confidence: 0.0-1.0,
-  decay_rate: "how fast this signal is becoming consensus — high decay = write NOW"
+  decay_rate: "how fast this signal is becoming consensus - high decay = write NOW"
 }
 ```
 

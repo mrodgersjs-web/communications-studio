@@ -1,5 +1,6 @@
-"""Tests for rig_comm.core.evaluate: score fields, the block/emit decision,
-banned-phrase blocking, and decision flips from custom rules and thresholds."""
+"""Tests for rig_comm.core.evaluate. Asserts the Report fields it returns,
+EMIT on the clean example message, BLOCK with named gates on a banned-phrase
+message, and decisions flipped by custom rules, thresholds and markers."""
 from __future__ import annotations
 
 from rig_comm import evaluate, validate_rules

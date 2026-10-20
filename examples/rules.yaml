@@ -1,0 +1,19 @@
+# Example rule set: doctrine defaults plus two house rules.
+# Run `rig rules-validate examples/rules.yaml` to check a file like this.
+banned_phrases:
+  - per my last email
+  - circling back
+  - just checking in
+  - following up
+  - touching base
+  - would love to chat
+  - let me know your thoughts
+  - happy to help
+  - hope this finds you well
+  - i wanted to reach out
+  - quick question
+  - looking forward to hearing from you
+thresholds:
+  word_count_warn: 150
+severities:
+  OVER_EXPLAINING: warn

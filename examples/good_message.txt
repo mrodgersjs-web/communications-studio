@@ -1,0 +1,18 @@
+Sarah,
+
+Your team is spending 40% of engineering hours on architecture maintenance.
+At 200 engineers, that is 80 full-time equivalents not shipping product. The
+cost lands on every roadmap slip.
+
+The real number is probably worse. Architecture tax scales nonlinearly
+with service count. Every new endpoint requires coordination across 4-7 services.
+That is not maintenance. That is an architecture actively hostile to velocity.
+
+If this is intentional, if you are betting the next round makes it
+manageable, ignore this. But if the 40% is creeping toward 50%, the
+math gets nonlinear fast.
+
+I have a hypothesis about which 3 services are causing 80% of the
+coupling. I would need 15 minutes with the dependency graph to confirm it.
+
+Mike

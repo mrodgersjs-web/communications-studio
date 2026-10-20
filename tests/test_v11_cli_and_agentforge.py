@@ -13,7 +13,6 @@ def test_cli_doctrine_check():
 def test_agentforge_single_message_guard_runs():
     root = Path(__file__).resolve().parents[1]
     wf = root / "agentforge" / "single-message-guard.workflow"
-    draft = "Your team has a measurable cost pattern. If not useful, ignore this."
-    run = run_workflow(str(wf), inputs={"draft": draft, "approved": True})
+    run = run_workflow(str(wf), inputs={"draft": "A measurable cost pattern.", "approved": True})
     assert run.status == "ok"
     assert run.steps

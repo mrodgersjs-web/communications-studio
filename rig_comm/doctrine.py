@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, List, Tuple
 
 from .gates import BANNED_PHRASES
 
@@ -38,7 +38,9 @@ def _validate_weight_sums(tolerance: float = 1e-6) -> List[DoctrineViolation]:
     for name, weights in FORMULA_WEIGHTS.items():
         total = sum(weights)
         if abs(total - 1.0) > tolerance:
-            violations.append(DoctrineViolation("FORMULA_WEIGHT_SUM", f"{name} weights sum to {total:.6f}, expected 1.0"))
+            violations.append(
+                DoctrineViolation("FORMULA_WEIGHT_SUM", f"{name} weights sum to {total:.6f}, expected 1.0")
+            )
     return violations
 
 

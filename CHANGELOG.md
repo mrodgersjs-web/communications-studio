@@ -5,6 +5,19 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [11.1.0] - 2026-10-19
 
+Polish wave (2026-10-19, same day, this commit): `.github/CODEOWNERS`
+(`* @mrodgersjs-web`) and `.github/copilot-instructions.md` were added,
+`timeout-minutes: 15` was added to every job in `.github/workflows/ci.yml`,
+`rig-lattice.yml` and `smoke.yml`, and `tests/test_repo_hygiene.py` was added.
+That test asserts from the files on disk that `.github/CODEOWNERS` contains
+`* @mrodgersjs-web`, that `.github/copilot-instructions.md` exists within
+8000 bytes and names a test command, that the README carries a
+`github/actions/workflow/status` badge, the `rodgersintelligence.com` footer,
+a test command word and clone examples targeting
+`mrodgersjs-web/communications-studio`, and that every workflow job has
+`timeout-minutes` and no `continue-on-error`.
+
+
 ### Added
 - Configurable rule sets: load banned phrases, reactance markers, manipulation
   markers, gate thresholds, and per-gate severities (block / warn / off) from a

@@ -1,13 +1,23 @@
 """
-RIG Communication Protocol V10 — Gate Enforcement Engine
-All 24 universal hard gates. Blocking failures stop shipment.
-Warnings require attention but don't block. Returns structured results.
+RIG Communication Protocol - Gate Enforcement Engine.
+
+Every gate is driven by a rule set (see :mod:`rig_comm.rules`): the banned
+phrases, the reactance and manipulation markers, the numeric thresholds, and
+the per-gate severity (block / warn / off). Blocking failures stop shipment.
+Warnings require attention but do not block. Returns structured results.
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 from math import log2
 from collections import Counter
+
+from .rules import (
+    DEFAULT_BANNED_PHRASES,
+    DEFAULT_REACTANCE_MARKERS,
+    RuleSet,
+    default_rules,
+)
 from .scoring import CommunicationScore
 
 
@@ -15,28 +25,9 @@ from .scoring import CommunicationScore
 # Data structures
 # ============================================================================
 
-BANNED_PHRASES: List[str] = [
-    "just checking in",
-    "following up",
-    "touching base",
-    "would love to chat",
-    "let me know your thoughts",
-    "happy to help",
-    "hope this finds you well",
-    "i wanted to reach out",
-    "quick question",
-    "looking forward to hearing from you",
-]
-
-# Words/phrases that signal imperative/reactance-triggering language
-REACTANCE_MARKERS: List[str] = [
-    "you must", "you need to", "you have to", "don't miss",
-    "act now", "urgent", "limited time", "before it's too late",
-    "you should", "you'd be crazy not to", "you're making a mistake",
-    "I need you to", "I require", "demand", "insist",
-    "asap", "immediately", "right now", "today only",
-    "last chance", "don't wait", "hurry",
-]
+# Legacy module-level aliases. The live lists come from the rule set.
+BANNED_PHRASES: List[str] = list(DEFAULT_BANNED_PHRASES)
+REACTANCE_MARKERS: List[str] = list(DEFAULT_REACTANCE_MARKERS)
 
 
 @dataclass
@@ -83,7 +74,7 @@ def _shannon_entropy(words: List[str]) -> float:
 
 
 def compute_entropy_ratio(text: str, baseline_text: str) -> float:
-    """H(artifact) / H(median_baseline). Gate: >= 1.2"""
+    """H(artifact) / H(median_baseline). Gate: >= entropy_ratio_min."""
     text_words = text.lower().split()
     baseline_words = baseline_text.lower().split()
     h_artifact = _shannon_entropy(text_words)
@@ -93,14 +84,17 @@ def compute_entropy_ratio(text: str, baseline_text: str) -> float:
     return h_artifact / h_baseline
 
 
-def compute_reactance_risk(text: str) -> float:
+def compute_reactance_risk(text: str, markers: Optional[List[str]] = None) -> float:
     """ReactanceRisk = sum(ThreatMarkers) / TotalSentences.
-    Gate: < 0.20 (Li & Shi 2025 meta-analysis threshold)"""
+
+    Gate: <= reactance_max (Li & Shi 2025 meta-analysis threshold is 0.20).
+    """
+    marker_list = markers if markers is not None else REACTANCE_MARKERS
     text_lower = text.lower()
     sentences = [s.strip() for s in text.replace('!', '.').replace('?', '.').split('.') if s.strip()]
     if not sentences:
         return 0.0
-    marker_count = sum(1 for marker in REACTANCE_MARKERS if marker in text_lower)
+    marker_count = sum(1 for marker in marker_list if marker.lower() in text_lower)
     return marker_count / len(sentences)
 
 
@@ -120,156 +114,192 @@ def _make_result(name: str, category: str, passed: bool, severity: str,
 # ============================================================================
 
 class GateEngine:
-    """Enforces all 24 universal hard gates for RIG communications."""
+    """Enforces the universal hard gates for RIG communications.
+
+    Every threshold, phrase list and severity comes from the rule set passed
+    to :meth:`check_gates`; with no rule set the shipped doctrine applies.
+    """
 
     BANNED_PHRASES: List[str] = BANNED_PHRASES
 
     @staticmethod
-    def scan_banned_phrases(text: str) -> List[str]:
-        """Scan text for banned phrases (case-insensitive)."""
+    def scan_banned_phrases(text: str, rules: Optional[RuleSet] = None) -> List[str]:
+        """Scan text for banned phrases (case-insensitive) per the rule set."""
+        rules = rules or default_rules()
         text_lower = text.lower()
-        return [p for p in BANNED_PHRASES if p in text_lower]
+        return [p for p in rules.banned_phrases if p.lower() in text_lower]
 
     @staticmethod
     def check_gates(score: CommunicationScore, text: str,
                     baseline_text: str = "professional email regarding business services",
-                    extra_context: Optional[Dict] = None) -> GateReport:
-        """Run all 24 gates. Returns structured GateReport."""
+                    extra_context: Optional[Dict] = None,
+                    rules: Optional[RuleSet] = None) -> GateReport:
+        """Run all gates under the given rule set. Returns a GateReport."""
+        rules = rules or default_rules()
+        t = {k: rules.threshold(k) for k in rules.thresholds}
         results: List[GateResult] = []
 
-        # === Sequence Integrity ===
-        r = _make_result("WOUND_MISSING", "sequence", score.wound_precision > 0.01, "block",
-                         "No wound identified" if score.wound_precision <= 0.01 else "Wound phase present",
-                         score.wound_precision, 0.01)
-        results.append(r)
+        def add(name: str, category: str, passed: bool, message: str,
+                value: Optional[float] = None, threshold: Optional[float] = None,
+                evidence: Optional[List[str]] = None) -> None:
+            severity = rules.severity(name)
+            if severity == "off":
+                return
+            results.append(_make_result(name, category, passed, severity, message,
+                                        value=value, threshold=threshold, evidence=evidence))
 
-        r = _make_result("MIRROR_MISSING", "sequence", score.mirror_accuracy > 0.01, "block",
-                         "No mirror — recipient won't feel understood" if score.mirror_accuracy <= 0.01 else "Mirror phase present",
-                         score.mirror_accuracy, 0.01)
-        results.append(r)
+        # === Sequence Integrity ===
+        passed = score.wound_precision > 0.01
+        add("WOUND_MISSING", "sequence", passed,
+            "Wound phase present" if passed else "No wound identified",
+            score.wound_precision, 0.01)
+
+        passed = score.mirror_accuracy > t["mirror_min"]
+        add("MIRROR_MISSING", "sequence", passed,
+            "Mirror phase present" if passed else "No mirror - recipient will not feel understood",
+            score.mirror_accuracy, t["mirror_min"])
 
         # === Autonomy ===
-        passed = score.autonomy_preservation >= 0.70
-        results.append(_make_result("AUTONOMY", "sequence", passed, "block",
-            f"AutonomyPreservation {score.autonomy_preservation:.2f} >= 0.70" if passed
-            else f"AutonomyPreservation {score.autonomy_preservation:.2f} < 0.70 — Chasing detected",
-            score.autonomy_preservation, 0.70))
+        passed = score.autonomy_preservation >= t["autonomy_min"]
+        auto_min = t["autonomy_min"]
+        add("AUTONOMY", "sequence", passed,
+            f"AutonomyPreservation {score.autonomy_preservation:.2f} >= {auto_min:.2f}" if passed
+            else f"AutonomyPreservation {score.autonomy_preservation:.2f} < {auto_min:.2f} - chasing detected",
+            score.autonomy_preservation, auto_min)
 
         # === Banned Phrases ===
-        banned = GateEngine.scan_banned_phrases(text)
+        banned = GateEngine.scan_banned_phrases(text, rules)
         passed_bp = len(banned) == 0
-        results.append(_make_result("BANNED_PHRASES", "sequence", passed_bp, "block",
+        add("BANNED_PHRASES", "sequence", passed_bp,
             "No banned phrases found" if passed_bp
             else f"Banned phrases found: {', '.join(banned)}",
-            evidence=banned))
+            evidence=banned)
 
         # === Quality Thresholds ===
-        passed = score.wound_precision >= 0.60
-        results.append(_make_result("WOUND_GENERIC", "quality", passed, "block",
-            f"WoundPrecision {score.wound_precision:.2f} {'>=' if passed else '<'} 0.60",
-            score.wound_precision, 0.60))
+        passed = score.wound_precision >= t["wound_min"]
+        add("WOUND_GENERIC", "quality", passed,
+            f"WoundPrecision {score.wound_precision:.2f} {'>=' if passed else '<'} {t['wound_min']:.2f}",
+            score.wound_precision, t["wound_min"])
 
-        passed = score.specificity_density >= 0.50
-        results.append(_make_result("TOO_VAGUE", "quality", passed, "block",
-            f"SpecificityDensity {score.specificity_density:.2f} {'>=' if passed else '<'} 0.50 — {'PASS' if passed else 'Add numbers, names, evidence'}",
-            score.specificity_density, 0.50))
+        passed = score.specificity_density >= t["specificity_min"]
+        spec_min = t["specificity_min"]
+        add("TOO_VAGUE", "quality", passed,
+            f"SpecificityDensity {score.specificity_density:.2f} {'>=' if passed else '<'} {spec_min:.2f} - "
+            f"{'PASS' if passed else 'Add numbers, names, evidence'}",
+            score.specificity_density, spec_min)
 
-        # Use the imported formula registry
         from .formulas import comm_raw_score
         crs = comm_raw_score(score)
-        passed_crs = crs >= 0.65
-        results.append(_make_result("BELOW_DOCTRINE", "quality", passed_crs, "block",
-            f"CommRawScore {crs:.4f} {'>=' if passed_crs else '<'} 0.65",
-            crs, 0.65))
+        passed_crs = crs >= t["comm_raw_min"]
+        add("BELOW_DOCTRINE", "quality", passed_crs,
+            f"CommRawScore {crs:.4f} {'>=' if passed_crs else '<'} {t['comm_raw_min']:.2f}",
+            crs, t["comm_raw_min"])
 
         # === Customer-Facing Gates ===
         from .formulas import customer_facing_artifact_score
         cfas = customer_facing_artifact_score(score) * 100  # Scale to 0-100
-        passed_cfas = cfas >= 82
-        results.append(_make_result("CFAS_FAIL", "customer_facing", passed_cfas, "block",
-            f"CFAS {cfas:.1f} {'>=' if passed_cfas else '<'} 82",
-            cfas, 82))
+        passed_cfas = cfas >= t["cfas_min"]
+        add("CFAS_FAIL", "customer_facing", passed_cfas,
+            f"CFAS {cfas:.1f} {'>=' if passed_cfas else '<'} {t['cfas_min']:.0f}",
+            cfas, t["cfas_min"])
 
-        passed_agf = score.anti_generic_force >= 0.80
-        results.append(_make_result("INTERCHANGEABLE", "customer_facing", passed_agf, "block",
-            f"AntiGenericForce {score.anti_generic_force:.2f} {'>=' if passed_agf else '<'} 0.80 — {'PASS' if passed_agf else 'Positioning interchangeable'}",
-            score.anti_generic_force, 0.80))
+        passed_agf = score.anti_generic_force >= t["anti_generic_min"]
+        agf_min = t["anti_generic_min"]
+        add("INTERCHANGEABLE", "customer_facing", passed_agf,
+            f"AntiGenericForce {score.anti_generic_force:.2f} {'>=' if passed_agf else '<'} {agf_min:.2f} - "
+            f"{'PASS' if passed_agf else 'Positioning interchangeable'}",
+            score.anti_generic_force, agf_min)
 
-        passed_id = score.identity_force >= 0.75
-        results.append(_make_result("NOT_RIG", "customer_facing", passed_id, "block",
-            f"IdentityForce {score.identity_force:.2f} {'>=' if passed_id else '<'} 0.75 — {'PASS' if passed_id else 'Does not feel like RIG'}",
-            score.identity_force, 0.75))
+        passed_id = score.identity_force >= t["identity_min"]
+        id_min = t["identity_min"]
+        add("NOT_RIG", "customer_facing", passed_id,
+            f"IdentityForce {score.identity_force:.2f} {'>=' if passed_id else '<'} {id_min:.2f} - "
+            f"{'PASS' if passed_id else 'Does not feel like RIG'}",
+            score.identity_force, id_min)
 
-        passed_rig = score.rig_signature >= 0.75
-        results.append(_make_result("GENERIC_SIGNATURE", "customer_facing", passed_rig, "block",
-            f"RIGSignature {score.rig_signature:.2f} {'>=' if passed_rig else '<'} 0.75",
-            score.rig_signature, 0.75))
+        passed_rig = score.rig_signature >= t["rig_signature_min"]
+        add("GENERIC_SIGNATURE", "customer_facing", passed_rig,
+            f"RIGSignature {score.rig_signature:.2f} {'>=' if passed_rig else '<'} {t['rig_signature_min']:.2f}",
+            score.rig_signature, t["rig_signature_min"])
 
         # === Deviation Gates ===
         from .formulas import bdf30
         bdf = bdf30(score)
-        # Raw BDF30 formula outputs 0.0–1.0. Gate threshold: 0.85.
-        # Full MAD-Z computation (target > 8.0σ) requires median baseline corpus.
-        passed_bdf = bdf >= 0.85
-        results.append(_make_result("BDF30_FAIL", "deviation", passed_bdf, "block",
-            f"BDF30 {bdf:.2f} {'>=' if passed_bdf else '<'} 0.85 — {'PASS' if passed_bdf else 'Not deviant enough'}",
-            bdf, 0.85))
+        # Raw BDF30 formula outputs 0.0-1.0. Full MAD-Z computation
+        # (target > 8.0 sigma) requires a median baseline corpus.
+        passed_bdf = bdf >= t["bdf30_min"]
+        bdf_min = t["bdf30_min"]
+        add("BDF30_FAIL", "deviation", passed_bdf,
+            f"BDF30 {bdf:.2f} {'>=' if passed_bdf else '<'} {bdf_min:.2f} - "
+            f"{'PASS' if passed_bdf else 'Not deviant enough'}",
+            bdf, bdf_min)
 
         if extra_context and 'swarm' in extra_context:
             swarm = extra_context['swarm']
             pred_success = getattr(swarm, 'predicted_success', lambda: 0)()
-            passed_ps = pred_success >= 0.82
-            results.append(_make_result("PREDICTED_FAIL", "deviation", passed_ps, "block",
-                f"PredictedSuccess {pred_success:.2f} {'>=' if passed_ps else '<'} 0.82",
-                pred_success, 0.82))
+            passed_ps = pred_success >= t["predicted_success_min"]
+            add("PREDICTED_FAIL", "deviation", passed_ps,
+                f"PredictedSuccess {pred_success:.2f} {'>=' if passed_ps else '<'} {t['predicted_success_min']:.2f}",
+                pred_success, t["predicted_success_min"])
 
         # === LinkedIn-Specific Gates ===
         if extra_context and extra_context.get('is_linkedin'):
             swarm_consensus = extra_context.get('swarm_consensus', 0)
-            passed_sc = swarm_consensus >= 0.65
-            results.append(_make_result("SWARM_DISAGREE", "linkedin", passed_sc, "block",
-                f"SwarmConsensus {swarm_consensus:.2f} {'>=' if passed_sc else '<'} 0.65",
-                swarm_consensus, 0.65))
+            passed_sc = swarm_consensus >= t["swarm_consensus_min"]
+            add("SWARM_DISAGREE", "linkedin", passed_sc,
+                f"SwarmConsensus {swarm_consensus:.2f} {'>=' if passed_sc else '<'} {t['swarm_consensus_min']:.2f}",
+                swarm_consensus, t["swarm_consensus_min"])
 
             hook_rupture = extra_context.get('hook_rupture', 0)
-            passed_hr = hook_rupture >= 0.70
-            results.append(_make_result("HOOK_WEAK", "linkedin", passed_hr, "block",
-                f"HookRupture {hook_rupture:.2f} {'>=' if passed_hr else '<'} 0.70 — Hook won't stop the scroll",
-                hook_rupture, 0.70))
+            passed_hr = hook_rupture >= t["hook_rupture_min"]
+            hr_min = t["hook_rupture_min"]
+            add("HOOK_WEAK", "linkedin", passed_hr,
+                f"HookRupture {hook_rupture:.2f} {'>=' if passed_hr else '<'} {hr_min:.2f} - "
+                f"hook will not stop the scroll",
+                hook_rupture, hr_min)
 
         # === Ethical Gates ===
-        passed_er = score.ethical_restraint >= 0.70
-        results.append(_make_result("MANIPULATION", "ethical", passed_er, "block",
-            f"EthicalRestraint {score.ethical_restraint:.2f} {'>=' if passed_er else '<'} 0.70 — {'PASS' if passed_er else 'Manipulation risk detected'}",
-            score.ethical_restraint, 0.70))
+        passed_er = score.ethical_restraint >= t["ethical_min"]
+        eth_min = t["ethical_min"]
+        add("MANIPULATION", "ethical", passed_er,
+            f"EthicalRestraint {score.ethical_restraint:.2f} {'>=' if passed_er else '<'} {eth_min:.2f} - "
+            f"{'PASS' if passed_er else 'Manipulation risk detected'}",
+            score.ethical_restraint, eth_min)
 
-        # Over-explanation (warn only)
+        # Over-explanation (warn by default)
         text_word_count = len(text.split())
-        is_over_explaining = text_word_count > 200
-        results.append(_make_result("OVER_EXPLAINING", "ethical", not is_over_explaining, "warn",
-            f"Word count: {text_word_count} ({'> 200 — Over-explaining. Cut 40%' if is_over_explaining else 'OK'})",
-            float(text_word_count), 200))
+        wc_warn = t["word_count_warn"]
+        is_over_explaining = text_word_count > wc_warn
+        wc_note = f"> {int(wc_warn)} - over-explaining, cut 40%" if is_over_explaining else "OK"
+        add("OVER_EXPLAINING", "ethical", not is_over_explaining,
+            f"Word count: {text_word_count} ({wc_note})",
+            float(text_word_count), wc_warn)
 
         text_lower = text.lower()
-        manipulation_count = sum(1 for m in ["guaranteed", "100%", "zero risk", "foolproof"] if m in text_lower)
-        passed_manip = manipulation_count <= 0
-        results.append(_make_result("MANIPULATION_LANGUAGE", "ethical", passed_manip, "block",
+        manipulation_hits = [m for m in rules.manipulation_markers if m.lower() in text_lower]
+        passed_manip = len(manipulation_hits) == 0
+        add("MANIPULATION_LANGUAGE", "ethical", passed_manip,
             "No manipulation language detected" if passed_manip
-            else f"Manipulation language detected: {manipulation_count} instances"))
+            else f"Manipulation language detected: {', '.join(manipulation_hits)}",
+            evidence=manipulation_hits)
 
         # === Entropy Gate ===
         entropy_ratio = compute_entropy_ratio(text, baseline_text)
-        passed_entropy = entropy_ratio >= 1.2
-        results.append(_make_result("ENTROPY", "entropy", passed_entropy, "block",
-            f"Entropy ratio {entropy_ratio:.3f} {'>=' if passed_entropy else '<'} 1.2 — {'PASS' if passed_entropy else 'Not enough deviation from median'}",
-            entropy_ratio, 1.2))
+        passed_entropy = entropy_ratio >= t["entropy_ratio_min"]
+        ent_min = t["entropy_ratio_min"]
+        add("ENTROPY", "entropy", passed_entropy,
+            f"Entropy ratio {entropy_ratio:.3f} {'>=' if passed_entropy else '<'} {ent_min} - "
+            f"{'PASS' if passed_entropy else 'Not enough deviation from median'}",
+            entropy_ratio, ent_min)
 
         # === Reactance Gate ===
-        reactance = compute_reactance_risk(text)
-        passed_react = reactance <= 0.20
-        results.append(_make_result("REACTANCE", "reactance", passed_react, "block",
-            f"ReactanceRisk {reactance:.2f} {'<=' if passed_react else '>'} 0.20 — {'PASS' if passed_react else 'Autonomy threat exceeded'}",
-            reactance, 0.20))
+        reactance = compute_reactance_risk(text, list(rules.reactance_markers))
+        react_max = t["reactance_max"]
+        passed_react = reactance <= react_max
+        add("REACTANCE", "reactance", passed_react,
+            f"ReactanceRisk {reactance:.2f} {'<=' if passed_react else '>'} {react_max:.2f} - "
+            f"{'PASS' if passed_react else 'Autonomy threat exceeded'}",
+            reactance, react_max)
 
         # === Build report ===
         blocks = [r for r in results if r.severity == "block" and not r.passed]
@@ -292,124 +322,3 @@ class GateEngine:
             can_ship=len(blocks) == 0,
             summary=categories,
         )
-
-
-# ============================================================================
-# Test harness — Sarah Chen cold email example
-# ============================================================================
-
-def _test_gates():
-    print("=" * 60)
-    print("  RIG Communications V10 — GateEngine Test Harness")
-    print("=" * 60)
-
-    # Build a passing score
-    score = CommunicationScore(
-        wound_precision=0.85,
-        mirror_accuracy=0.90,
-        autonomy_preservation=0.85,
-        qualification_tension=0.80,
-        specificity_density=0.88,
-        open_loop_residue=0.88,
-        rpe_strength=0.85,
-        reality_anchor=0.90,
-        anti_generic_force=0.88,
-        tone_precision=0.82,
-        memory_residue=0.80,
-        ethical_restraint=0.92,
-        stakes_clarity=0.90,
-        desire_activation=0.82,
-        tension_release=0.78,
-        relief_clarity=0.85,
-        identity_resonance=0.85,
-        peak_end_memory=0.88,
-        wound_identification=0.88,
-        specificity=0.85,
-        restraint=0.80,
-        mirror_accuracy_reply=0.90,
-        qualification_frame=0.82,
-        open_loop_strength=0.85,
-        close_quality=0.78,
-        semantic_inversion=0.92,
-        proof_density=0.88,
-        enemy_specificity=0.90,
-        catchphrase_voltage=0.85,
-        structural_novelty=0.82,
-        negative_space_weight=0.75,
-        identity_force=0.90,
-        eminem_density=0.88,
-        hemingway_compression=0.85,
-        didion_cadence=0.82,
-        mccarthy_rhythm=0.80,
-        wallace_recursion=0.86,
-        catchphrase_score=0.85,
-        evidence=0.90,
-        rig_signature=0.88,
-        artifact_completeness=0.85,
-        emotional_voltage=0.82,
-        mechanism_clarity=0.80,
-        memory_compounding=0.78,
-    )
-
-    good_text = """Sarah —
-
-Your team is spending 40% of engineering hours on architecture maintenance.
-At 200 engineers, that's 80 full-time equivalents not shipping product.
-
-The real number is probably worse. Architecture tax scales nonlinearly
-with service count. Every new endpoint requires coordination across 4-7 services.
-That's not maintenance. That's an architecture actively hostile to velocity.
-
-If this is intentional — if you're betting the next round makes it
-manageable — ignore this. But if the 40% is creeping toward 50%, the
-math gets nonlinear fast.
-
-I have a hypothesis about which 3 services are causing 80% of the
-coupling. I'd need 15 minutes with the dependency graph to confirm it.
-
-— Mike"""
-
-    print("\n--- Test 1: Clean communication (should PASS all) ---")
-    report = GateEngine.check_gates(score, good_text)
-    print(f"  Can ship: {report.can_ship}")
-    print(f"  Blocks: {len(report.blocks)}")
-    print(f"  Warnings: {len(report.warnings)}")
-    if report.blocks:
-        for b in report.blocks:
-            print(f"    BLOCK: {b.name} — {b.message}")
-
-    print("\n--- Test 2: Communication with banned phrase (should BLOCK) ---")
-    bad_text = "Hope this email finds you well. Would love to chat about your needs. Let me know your thoughts!"
-    bad_report = GateEngine.check_gates(score, bad_text)
-    print(f"  Can ship: {bad_report.can_ship}")
-    print(f"  Blocks: {len(bad_report.blocks)}")
-    for b in bad_report.blocks:
-        print(f"    BLOCK: {b.name} — {b.message}")
-
-    print("\n--- Test 3: Banned phrase scanner ---")
-    found = GateEngine.scan_banned_phrases("Just checking in to follow up on our conversation. Would love to chat!")
-    print(f"  Found: {found}")
-
-    print("\n--- Test 4: Entropy ratio ---")
-    generic_baseline = "I am reaching out to discuss potential collaboration opportunities. Please let me know if you are interested in exploring how we might work together."
-    ratio = compute_entropy_ratio(good_text, generic_baseline)
-    print(f"  Entropy ratio (good text / generic baseline): {ratio:.3f}")
-
-    print("\n--- Test 5: Reactance risk ---")
-    reactance = compute_reactance_risk(good_text)
-    print(f"  ReactanceRisk: {reactance:.3f}")
-    reactance_bad = compute_reactance_risk("You must act now! This is urgent and you need to respond immediately. Don't miss this limited time offer!")
-    print(f"  ReactanceRisk (pushy text): {reactance_bad:.3f}")
-
-    print("\n--- Test 6: Category summary ---")
-    for cat, passed in report.summary.items():
-        status = "PASS" if passed else "FAIL"
-        print(f"  {cat}: {status}")
-
-    print("\n" + "=" * 60)
-    print("  All GateEngine tests complete.")
-    print("=" * 60)
-
-
-if __name__ == "__main__":
-    _test_gates()

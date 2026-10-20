@@ -12,6 +12,7 @@ from .formulas import (
     email_voltage_score,
 )
 from .gates import GateEngine
+from .rules import RuleSet, default_rules
 from .scoring import CommunicationScore
 
 
@@ -71,13 +72,13 @@ def _specificity_density(text: str) -> float:
     return max(0.05, min(1.0, raw + 0.35))
 
 
-def _build_score(text: str, channel: str) -> CommunicationScore:
+def _build_score(text: str, channel: str, rules: RuleSet) -> CommunicationScore:
     text_lower = text.lower()
     phases = {k: _phase_score(text_lower, k) for k in _PHASE_CUES}
     specificity = _specificity_density(text)
     evidence = min(1.0, specificity + 0.05)
     anti_generic = min(1.0, 0.55 + specificity * 0.5)
-    ethical_restraint = 0.9 if not any(m in text_lower for m in _MANIPULATION_MARKERS) else 0.45
+    ethical_restraint = 0.9 if not any(m.lower() in text_lower for m in rules.manipulation_markers) else 0.45
     novelty = min(1.0, 0.45 + specificity * 0.45)
 
     score = CommunicationScore(
@@ -157,8 +158,9 @@ def _phase_detection_from_score(score: CommunicationScore) -> Dict[str, float]:
     }
 
 
-def evaluate(text: str, channel: str = "email") -> Report:
-    score = _build_score(text=text, channel=channel)
+def evaluate(text: str, channel: str = "email", rules: RuleSet | None = None) -> Report:
+    rules = rules or default_rules()
+    score = _build_score(text=text, channel=channel, rules=rules)
     gate_report = GateEngine.check_gates(
         score,
         text,
@@ -167,12 +169,13 @@ def evaluate(text: str, channel: str = "email") -> Report:
             "swarm_consensus": max(score.swarm_consensus, 0.72),
             "hook_rupture": max(score.hook_rupture, 0.75),
         },
+        rules=rules,
     )
 
     formula_name, channel_val = _channel_score(score, channel)
     blocks = [f"{b.name}: {b.message}" for b in gate_report.blocks]
     warnings = [f"{w.name}: {w.message}" for w in gate_report.warnings]
-    banned = GateEngine.scan_banned_phrases(text)
+    banned = GateEngine.scan_banned_phrases(text, rules)
 
     return Report(
         text=text,

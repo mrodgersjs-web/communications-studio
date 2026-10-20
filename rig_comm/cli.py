@@ -7,7 +7,14 @@ from typing import Dict
 
 from .core import evaluate
 from .doctrine import validate_doctrine
+from .rules import RuleSet, load_rules
 from .agentforge.runner import run_workflow
+
+
+def _load_rules_arg(path: str | None) -> RuleSet | None:
+    if not path:
+        return None
+    return load_rules(path)
 
 
 def _read_text(path: str) -> str:
@@ -25,14 +32,20 @@ def main(argv: list[str] | None = None) -> int:
     p_eval = sub.add_parser("evaluate", help="Evaluate text")
     p_eval.add_argument("text")
     p_eval.add_argument("--channel", default="email")
+    p_eval.add_argument("--rules", default=None, help="Rule set file (.yaml/.yml/.json)")
 
     p_gate = sub.add_parser("gate", help="Evaluate file and return ship/block verdict")
     p_gate.add_argument("file")
     p_gate.add_argument("--channel", default="email")
+    p_gate.add_argument("--rules", default=None, help="Rule set file (.yaml/.yml/.json)")
 
     p_score = sub.add_parser("score", help="Score file and return formula values")
     p_score.add_argument("file")
     p_score.add_argument("--channel", default="email")
+    p_score.add_argument("--rules", default=None, help="Rule set file (.yaml/.yml/.json)")
+
+    p_rules = sub.add_parser("rules-validate", help="Validate a rule set file and print it")
+    p_rules.add_argument("file")
 
     p_doctrine = sub.add_parser("doctrine-check", help="Run doctrine invariants")
     p_doctrine.add_argument("--artifact", action="append", default=[])
@@ -44,18 +57,27 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
+    if args.command == "rules-validate":
+        try:
+            rules = load_rules(args.file)
+        except Exception as exc:  # validation errors list every problem
+            print(json.dumps({"valid": False, "error": str(exc)}, indent=2))
+            return 1
+        print(json.dumps({"valid": True, "rules": rules.to_dict()}, indent=2))
+        return 0
+
     if args.command == "evaluate":
-        report = evaluate(args.text, channel=args.channel)
+        report = evaluate(args.text, channel=args.channel, rules=_load_rules_arg(args.rules))
         print(json.dumps(report.to_dict(), indent=2))
         return 0 if report.can_ship else 2
 
     if args.command == "gate":
-        report = evaluate(_read_text(args.file), channel=args.channel)
+        report = evaluate(_read_text(args.file), channel=args.channel, rules=_load_rules_arg(args.rules))
         print(json.dumps({"can_ship": report.can_ship, "blocks": report.blocks, "warnings": report.warnings}, indent=2))
         return 0 if report.can_ship else 2
 
     if args.command == "score":
-        report = evaluate(_read_text(args.file), channel=args.channel)
+        report = evaluate(_read_text(args.file), channel=args.channel, rules=_load_rules_arg(args.rules))
         print(json.dumps({
             "comm_raw_score": report.comm_raw_score,
             "channel_formula": report.channel_formula,

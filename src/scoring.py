@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from rig_comm.scoring import *  # noqa: F401,F403
+from rig_comm.scoring import GateEngine, example_sarah_chen  # noqa: F401
 
 
 if __name__ == "__main__":

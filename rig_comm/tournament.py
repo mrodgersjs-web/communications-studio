@@ -1,11 +1,10 @@
 """
-RIG Communication Protocol V10 — 6-Round Idea Tournament
+RIG Communication Protocol V10 - 6-Round Idea Tournament
 Orchestrates the complete V10→V15 idea generation pipeline.
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict
-from enum import Enum
 import random
 
 
@@ -79,7 +78,7 @@ class TournamentReport:
 
 
 # ============================================================================
-# AngleGenerator — produces mock angles from signal cards
+# AngleGenerator - produces mock angles from signal cards
 # ============================================================================
 
 ANGLE_TEMPLATES = {
@@ -217,8 +216,8 @@ def round_2_idp_scoring(angles: List[AngleCard], keep_count: int = 20) -> RoundR
         input_count=len(angles), output_count=len(survivors),
         kills=[a.id for a in angles if a.killed],
         survivors=[a.id for a in survivors],
-        notes=f"Bottom 60% culled. Single-layer angles killed immediately. "
-              f"IDP hard gate < 0.65 enforced."
+        notes="Bottom 60% culled. Single-layer angles killed immediately. "
+              "IDP hard gate < 0.65 enforced."
     )
 
 
@@ -322,7 +321,7 @@ def round_4_research_depth(angles: List[AngleCard], keep_count: int = 4) -> Roun
         round_number=4, round_name="Research Depth Pass",
         input_count=len(angles), output_count=len(survivors),
         kills=killed, survivors=[a.id for a in survivors],
-        notes=f"ProofDensity, FalsificationResilience, MechanismClarity gates."
+        notes="ProofDensity, FalsificationResilience, MechanismClarity gates."
     )
 
 
@@ -396,7 +395,7 @@ class IdeaTournament:
         # Default mock signals
         if signals is None:
             signals = [
-                SignalCard(st, f"Signal: {st} — consensus hardening at scale",
+                SignalCard(st, f"Signal: {st} - consensus hardening at scale",
                            f"source-{i}", 0.7 + 0.03 * i, 0.3 + 0.05 * i)
                 for i, st in enumerate(SIGNAL_TYPES)
             ]
@@ -418,11 +417,13 @@ class IdeaTournament:
             """If survivors are below floor, rescue top-IDP angles from the pool."""
             if len(angles) >= floor:
                 return angles
+            # Fill the remaining slots with the strongest pool angles.
             need = floor - len(angles)
-            rescued = sorted(pool, key=lambda a: a.idp_score, reverse=True)
-            for a in rescued:
-                if a not in angles and not a.killed and len(angles) < floor:
-                    angles.append(a)
+            rescued = [
+                a for a in sorted(pool, key=lambda a: a.idp_score, reverse=True)
+                if a not in angles and not a.killed
+            ][:need]
+            angles.extend(rescued)
             return angles
 
         # Round 2: IDP Scoring
@@ -479,7 +480,7 @@ class IdeaTournament:
             return
 
         print("=" * 70)
-        print("  RIG V10 Idea Tournament — Full Pipeline Report")
+        print("  RIG V10 Idea Tournament - Full Pipeline Report")
         print("=" * 70)
         print(f"  Initial angles: {self.report.initial_angle_count}")
         print(f"  Total killed:   {self.report.total_killed}")
@@ -503,7 +504,7 @@ class IdeaTournament:
 
 def _test_tournament():
     print("=" * 70)
-    print("  RIG Communications V10 — Tournament Test Harness")
+    print("  RIG Communications V10 - Tournament Test Harness")
     print("=" * 70)
 
     tournament = IdeaTournament(seed=99)

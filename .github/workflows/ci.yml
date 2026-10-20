@@ -1,9 +1,10 @@
+# CI: ruff and pytest with coverage across Python 3.10 to 3.13.
 name: CI
 
 on:
-  workflow_dispatch:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,6 +12,9 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,21 +22,26 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install package
+      - name: Install
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .[dev]
+          python -m pip install -e '.[dev]'
 
-      - name: Run tests
-        run: python -m pytest tests -v
+      - name: Lint
+        run: ruff check .
 
-      - name: Doctrine check
-        run: |
-          rig doctrine-check --artifact templates/cold-email.md --artifact templates/reply.md
+      - name: Tests with coverage
+        run: pytest -q --cov=rig_comm --cov-report=term-missing
 
-      - name: Backward-compat smoke
+      - name: Validate example rule set
+        run: rig rules-validate examples/rules.yaml
+
+      - name: Run shipped example
+        run: python examples/run_example.py
+
+      - name: Backward-compat shims
         run: |
           python src/scoring.py
           python src/gates.py
